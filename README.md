@@ -12,11 +12,14 @@ Cocos Creator 构建扩展：启用后 **自动** 让游戏音频与其它 App �
 ## 使用（本工程）
 
 1. 打开 Cocos Creator → **扩展 → 扩展管理器 → 项目**
-2. 刷新后找到 **audio-mix-others** → **启用**
-3. 重新构建 Android（建议清一次 `build/android` 或勾选重新生成）
-4. 真机验证：先开系统音乐，再进游戏播 BGM/音效，其它音乐不应被压小
+2. 刷新后找到 **audio-mix-others** → **启用**（控制台应出现 `patched:` / `already patched:`）
+3. **必须重新编译安装 Android 包**（仅启用扩展不够；Java 要进 APK）
+   - 构建面板勾选 **Audio Mix Others**（默认开）
+   - 建议先删 `build/android/proj/build` 或 Clean 后再 Make，避免旧 class 缓存
+4. 真机验证：先开系统音乐，再进游戏，其它音乐不应被压小
 
-构建面板里本扩展选项 **Audio Mix Others** 默认勾选；取消勾选则本次构建不打补丁。
+若仍被压小：用 `adb logcat -s CocosAudioFocusManager` 看是否有  
+`mix-with-others (skip requestAudioFocus)`；没有则说明安装的还是旧包。
 
 ## 行为说明
 
